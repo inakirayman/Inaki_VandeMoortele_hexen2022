@@ -21,10 +21,10 @@ public class HexHelper
         return new Vector3(qCube, rCube, sCube);
     }
 
-    public static Hex AxialRound(float q, float r)
+    public static Position AxialRound(float q, float r)
     {
         Vector2 hex = CubeToAxial(CubeRound(AxialToCube(q, r)));
-        return new Hex((int)hex.x, (int)hex.y);
+        return new Position((int)hex.x, (int)hex.y);
     }
 
     public static Vector3 CubeRound(Vector3 cube)
@@ -48,16 +48,4 @@ public class HexHelper
 
         return new Vector3(q, r, s);
     }
-
-
-
-
-
-    //var qGrid = Mathf.Round(q);
-    //var rGrid = Mathf.Round(r);
-
-    //q -= qGrid;
-    //r -= rGrid;
-
-    //var dq = Mathf.Round(q + 0.5f * r) * (q * q >= r * r);
 }
