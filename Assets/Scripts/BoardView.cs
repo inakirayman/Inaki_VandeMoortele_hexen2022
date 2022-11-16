@@ -19,22 +19,8 @@ public class BoardView : MonoBehaviour
 {
     public event EventHandler<PositionEventArgs> PositionClicked;
 
-    private void Start()
-    {
-        var positionViews = GetComponentsInChildren<PositionView>();
-        foreach (var positionView in positionViews)
-            positionView.Clicked += OnPositionViewClicked;
-    }
-    private void OnPositionViewClicked(object sender, EventArgs e)
-    {
-        if (sender is PositionView positionView)
-            OnPositionClicked(new PositionEventArgs(positionView.HexPosition));
-    }
-
-
-
-    //internal void ChildClicked(PositionView positionView)
-    //    => OnPositionClicked(new PositionEventArgs(positionView.HexPosition));
+    internal void ChildClicked(PositionView positionView)
+        => OnPositionClicked(new PositionEventArgs(positionView.HexPosition));
 
     protected virtual void OnPositionClicked(PositionEventArgs e)
     {

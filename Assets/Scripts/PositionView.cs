@@ -6,21 +6,19 @@ using UnityEngine.EventSystems;
 
 public class PositionView : MonoBehaviour, IPointerClickHandler
 {
+    private BoardView _parent;
 
     public Position HexPosition => PositionHelper.WorldToHexPosition(transform.position);
 
-    public event EventHandler Clicked;
+
+    private void Start()
+    {
+        _parent = GetComponentInParent<BoardView>();
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        onClicked(EventArgs.Empty);
-        
-    }
-
-    protected virtual void onClicked(EventArgs eventArgs)
-    {
-        var handler = Clicked;
-        handler?.Invoke(this, eventArgs);
+        _parent.ChildClicked(this);
     }
 
 }

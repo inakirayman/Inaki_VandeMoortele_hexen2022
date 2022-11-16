@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PositionHelper
 {
+    public const int Distance = 3;
     public const float HexSize = 0.5f;
     public static Position WorldToHexPosition(Vector3 worldpostion)
     {
