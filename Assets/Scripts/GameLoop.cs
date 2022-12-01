@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameLoop : MonoBehaviour
 {
     private Board _board;
+ 
 
     void Start()
     {
@@ -34,7 +35,8 @@ public class GameLoop : MonoBehaviour
         {
             var toPosition = new Position(e.Position.Q, e.Position.R + 1);
             _board.Move(e.Position, toPosition);
-            //test code ^^^
+           
+
         }
 
     }

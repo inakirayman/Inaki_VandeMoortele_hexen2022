@@ -49,7 +49,7 @@ public class HexHelper
         return new Vector3(q, r, s);
     }
 
-    public static int axial_distance(Position a, Position b)
+    public static int AxialDistance(Position a, Position b)
     {
         return (Mathf.Abs(a.Q - b.Q) + Mathf.Abs(a.Q + a.R - b.Q - b.R) + Mathf.Abs(a.R - b.R)) / 2;
     }
