@@ -6,10 +6,16 @@ using UnityEngine;
 public class GameLoop : MonoBehaviour
 {
     private Board _board;
- 
+    private Deck _deck;
+    [SerializeField]
+    private GameObject _enemy;
 
     void Start()
     {
+        SpawnHelper.SpawnEnemies(_enemy, 8);
+
+        _deck = FindObjectOfType<Deck>();
+
         _board = new Board(PositionHelper.Distance);
         _board.PieceMoved += (s, e)
              => e.Piece.MoveTo(PositionHelper.HexToWorldPosition(e.ToPosition));
@@ -38,6 +44,9 @@ public class GameLoop : MonoBehaviour
            
 
         }
+
+        Debug.Log(e.Position);
+
 
     }
 }
