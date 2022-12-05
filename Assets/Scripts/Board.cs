@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using UnityEngine;
 
 public class PieceMovedEventArgs : EventArgs
 {
@@ -50,6 +50,7 @@ public class Board
     public event EventHandler<PiecePlacedEventArgs> PiecePlaced;
 
     private Dictionary<Position, PieceView> _pieces = new Dictionary<Position, PieceView>();
+    
         
     private readonly int _distance;
         
@@ -63,7 +64,7 @@ public class Board
         => _pieces.TryGetValue(position, out piece);
 
     public bool IsValid(Position position)
-        => (0 <= position.Q && position.Q <= _distance && 0 <= position.R && position.R <= _distance);
+        => (0 <= Mathf.Abs(position.Q) && Mathf.Abs(position.Q) <= _distance && 0 <= Mathf.Abs(position.R) && Mathf.Abs(position.R) <= _distance);
 
     public bool Place(Position position, PieceView piece)
     {
@@ -93,9 +94,10 @@ public class Board
 
         if (_pieces.ContainsKey(toPosition))
             return false;
+
         if (!_pieces.TryGetValue(fromPosition, out var piece))
             return false;
-
+        
         _pieces.Remove(fromPosition);
         _pieces[toPosition] = piece;
 

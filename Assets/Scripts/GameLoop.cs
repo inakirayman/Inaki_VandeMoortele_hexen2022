@@ -7,6 +7,8 @@ public class GameLoop : MonoBehaviour
 {
     private Board _board;
     private Deck _deck;
+
+    private PieceView Player1;
     [SerializeField]
     private GameObject _enemy;
 
@@ -29,6 +31,14 @@ public class GameLoop : MonoBehaviour
         var piecesViews = FindObjectsOfType<PieceView>();
         foreach (var pieceView in piecesViews)
             _board.Place(PositionHelper.WorldToHexPosition(pieceView.WorldPosition), pieceView);
+        foreach (var pieceView in piecesViews)
+         if (pieceView.Player == Player.Player1)
+            {
+                Player1 = pieceView;
+                break;
+            }
+        
+            
 
         var boardView = FindObjectOfType<BoardView>();
         boardView.PositionClicked += OnPositionClicked;
@@ -37,16 +47,24 @@ public class GameLoop : MonoBehaviour
 
     private void OnPositionClicked(object sender, PositionEventArgs e)
     {
-        if (_board.TryGetPieceAt(e.Position, out var piece))
+        var cards = _deck.GetComponentsInChildren<Card>();
+        foreach(Card card in cards)
         {
-            var toPosition = new Position(e.Position.Q, e.Position.R + 1);
-            _board.Move(e.Position, toPosition);
-           
+
+            if (card.IsPlayed)
+            {
+                if(card.Type == CardType.Move)
+                {
+                    _board.Move(PositionHelper.WorldToHexPosition(Player1.WorldPosition), e.Position);
+                    
+                }
+            }
 
         }
 
-        Debug.Log(e.Position);
 
+
+        _deck.DeckUpdate();
 
     }
 }

@@ -8,10 +8,14 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     [SerializeField]
     private CardType _type;
+    public CardType Type => _type;
+
 
     private GameObject _copy;
 
     public bool IsPlayed = false;
+
+    public Position selectedPosition;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -28,7 +32,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
         if (Physics.Raycast(ray, out hit, 100) && hit.collider.tag == "Tile")
         {
-            Debug.Log("HIT");
+            PositionView positionView = hit.transform.gameObject.GetComponent<PositionView>();
+            selectedPosition = positionView.HexPosition;
         }
     }
 
@@ -41,10 +46,13 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         if (Physics.Raycast(ray, out hit, 100) && hit.collider.tag == "Tile")
         {
 
-            hit.transform.gameObject.GetComponent<PositionView>().OnPointerClick(eventData);
+            PositionView positionView = hit.transform.gameObject.GetComponent<PositionView>();
+            selectedPosition = positionView.HexPosition;
             Destroy(_copy);
             IsPlayed = true;
-            gameObject.SetActive(false);
+            positionView.OnPointerClick(eventData);
+            
+            
 
         }
         else

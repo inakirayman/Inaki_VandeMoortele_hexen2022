@@ -27,32 +27,18 @@ public class Deck : MonoBehaviour
             _cards[i] = card;
         }
         Debug.Log("Deck Generated");
+        DeckUpdate();
     }
 
     // Update is called once per frame
-    void Update()
+    public void DeckUpdate()
     {
         List<GameObject> tmp = new List<GameObject>(_cards);
 
         Vector3 startPosition = transform.position;
         startPosition = GetStartPosition(tmp, transform.position);
 
-        int handSize;
-        if (tmp.Count >= 5)
-            handSize = _handSize;
-        else
-            handSize = tmp.Count;
-
-
-
-        for (int i = 0; i < handSize; i++)
-        {
-            GameObject card = tmp[i];
-            card.SetActive(true);
-            card.transform.position = startPosition;
-
-            startPosition += new Vector3(60, 0);
-        }
+       
 
         for (int i = 0; i < tmp.Count; i++)
         {
@@ -65,6 +51,26 @@ public class Deck : MonoBehaviour
             }
 
         }
+
+        int handSize;
+        if (tmp.Count >= 5)
+            handSize = _handSize;
+        else
+            handSize = tmp.Count;
+
+
+
+        //Can be replaced with Horizontal Layout Group
+        for (int i = 0; i < handSize; i++)
+        {
+            GameObject card = tmp[i];
+            card.SetActive(true);
+            card.transform.position = startPosition;
+
+            startPosition += new Vector3(60, 0);
+        }
+
+        
 
         _cards = tmp.ToArray();
 
