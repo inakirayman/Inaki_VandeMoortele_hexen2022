@@ -33,10 +33,10 @@ public class GameLoop : MonoBehaviour
             _board.Place(PositionHelper.WorldToHexPosition(pieceView.WorldPosition), pieceView);
         foreach (var pieceView in piecesViews)
          if (pieceView.Player == Player.Player1)
-            {
-                Player1 = pieceView;
-                break;
-            }
+         {
+            Player1 = pieceView;
+            break;
+         }
         
             
 
@@ -53,11 +53,25 @@ public class GameLoop : MonoBehaviour
 
             if (card.IsPlayed)
             {
+                
                 if(card.Type == CardType.Move)
                 {
                     _board.Move(PositionHelper.WorldToHexPosition(Player1.WorldPosition), e.Position);
                     
                 }
+                else if (card.Type == CardType.Slash)
+                {
+
+                }
+                else if (card.Type == CardType.Lazer)
+                {
+
+                }
+                else if (card.Type == CardType.ShockWave)
+                {
+
+                }
+
             }
 
         }

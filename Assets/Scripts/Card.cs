@@ -14,12 +14,14 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     private GameObject _copy;
 
     public bool IsPlayed = false;
+    public bool IsHolding = false;
 
     public Position selectedPosition;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         _copy = Instantiate(transform.gameObject, transform.parent);
+        IsHolding = true;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -57,6 +59,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         }
         else
             Destroy(_copy);
+
+        IsHolding = false;
 
     }
 
