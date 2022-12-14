@@ -59,18 +59,20 @@ public class Board
         _distance = distance;
 
     }
+    public bool TryGetPiece(Position position, out PieceView piece)
+            => _pieces.TryGetValue(position, out piece);
 
     public bool TryGetPieceAt(Position position, out PieceView piece)
         => _pieces.TryGetValue(position, out piece);
 
-    public bool IsValid(Position position)
+    public bool IsValidPosition(Position position)
         => (0 <= Mathf.Abs(position.Q) && Mathf.Abs(position.Q) <= _distance && 0 <= Mathf.Abs(position.R) && Mathf.Abs(position.R) <= _distance);
 
     public bool Place(Position position, PieceView piece)
     {
         if (piece == null)
             return false;
-        if (!IsValid(position))
+        if (!IsValidPosition(position))
             return false;
         if (_pieces.ContainsKey(position))
             return false;
@@ -89,7 +91,7 @@ public class Board
     public bool Move(Position fromPosition, Position toPosition)
     {
 
-        if (!IsValid(toPosition))
+        if (!IsValidPosition(toPosition))
             return false;
 
         if (_pieces.ContainsKey(toPosition))
@@ -108,7 +110,7 @@ public class Board
 
     public bool Take(Position fromPosition)
     {
-        if (!IsValid(fromPosition))
+        if (!IsValidPosition(fromPosition))
             return false;
 
         if (!_pieces.ContainsKey(fromPosition))

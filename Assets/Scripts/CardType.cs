@@ -14,4 +14,10 @@ using System.Threading.Tasks;
         Lazer
 
     }
+    public interface ICard
+    {
+        CardType Type { get; }
+
+        //Player Player { get; }
+    }
 

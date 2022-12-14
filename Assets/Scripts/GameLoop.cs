@@ -89,16 +89,16 @@ public class GameLoop : MonoBehaviour
     private void OnPositionClicked(object sender, PositionEventArgs e)
     {
         var cards = _deck.GetComponentsInChildren<Card>();
-        foreach(Card card in cards)
+        foreach (Card card in cards)
         {
 
             if (card.IsPlayed)
             {
-                
-                if(card.Type == CardType.Move)
+
+                if (card.Type == CardType.Move)
                 {
                     card.IsPlayed = _board.Move(PositionHelper.WorldToHexPosition(Player1.WorldPosition), e.Position);
-                    
+
                 }
                 else if (card.Type == CardType.Slash)
                 {
@@ -118,7 +118,10 @@ public class GameLoop : MonoBehaviour
         }
         _deck.DeckUpdate();
 
+
+        Debug.Log(e.Position);
     }
+
 
 
 
