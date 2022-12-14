@@ -17,6 +17,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public bool IsHolding = false;
 
     public Position selectedPosition;
+    private PositionView _positionView;
+
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -28,19 +30,30 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     {
         _copy.transform.position = eventData.position;
 
-        RaycastHit hit;
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 100) && hit.collider.tag == "Tile")
-        {
-            PositionView positionView = hit.transform.gameObject.GetComponent<PositionView>();
-            selectedPosition = positionView.HexPosition;
-        }
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        //if (Physics.Raycast(ray, out hit, 100) && hit.collider.tag == "Tile")
+        //{
+        //    PositionView positionView = hit.transform.gameObject.GetComponent<PositionView>();
+
+        //    if (selectedPosition.Q != positionView.HexPosition.Q || selectedPosition.R != positionView.HexPosition.R && _positionView != null)
+        //    {
+        //        if(_positionView != null)
+        //        _positionView.DeActivate();
+        //    }
+
+        //    positionView.Activate();
+        //    _positionView = positionView;
+        //    selectedPosition = _positionView.HexPosition;
+        //}
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        //_positionView.DeActivate();
         RaycastHit hit;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

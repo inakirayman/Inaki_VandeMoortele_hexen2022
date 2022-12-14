@@ -43,8 +43,8 @@ public class Deck : MonoBehaviour
     {
         List<GameObject> tmp = new List<GameObject>(_cards);
 
-        Vector3 startPosition = transform.position;
-        startPosition = GetStartPosition(tmp, transform.position);
+       
+        Vector3 startPosition = GetStartPosition(tmp, transform.position);
 
        
 
@@ -65,8 +65,6 @@ public class Deck : MonoBehaviour
             handSize = _handSize;
         else
             handSize = tmp.Count;
-
-
 
         //Can be replaced with Horizontal Layout Group
         for (int i = 0; i < handSize; i++)

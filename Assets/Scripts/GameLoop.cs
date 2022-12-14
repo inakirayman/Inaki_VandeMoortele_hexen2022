@@ -56,7 +56,7 @@ public class GameLoop : MonoBehaviour
                 
                 if(card.Type == CardType.Move)
                 {
-                    _board.Move(PositionHelper.WorldToHexPosition(Player1.WorldPosition), e.Position);
+                    card.IsPlayed = _board.Move(PositionHelper.WorldToHexPosition(Player1.WorldPosition), e.Position);
                     
                 }
                 else if (card.Type == CardType.Slash)
@@ -75,10 +75,20 @@ public class GameLoop : MonoBehaviour
             }
 
         }
-
-
-
         _deck.DeckUpdate();
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
