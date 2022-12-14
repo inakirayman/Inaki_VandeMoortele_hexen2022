@@ -21,9 +21,13 @@ public class BoardView : MonoBehaviour
 
     private Dictionary<Position, PositionView> _positionViews = new Dictionary<Position, PositionView>();
 
+
     private List<Position> _activePosition = new List<Position>();
 
-    public List<Position> ActivePosition
+    private List<Position> _tilePositons = new List<Position>();
+    public List<Position> TilePositions => _tilePositons;
+
+    public List<Position> SetActivePosition
     {
         set
         {
@@ -49,11 +53,9 @@ public class BoardView : MonoBehaviour
         foreach (var positionView in positionViews)
         {
             _positionViews.Add(positionView.HexPosition, positionView);
+            _tilePositons.Add(positionView.HexPosition);
         }
     }
-
-
-
 
 
     internal void ChildClicked(PositionView positionView)

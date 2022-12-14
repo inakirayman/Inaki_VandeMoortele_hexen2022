@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class GameLoop : MonoBehaviour
 {
-    private Board _board;
-    private Deck _deck;
-
-    private PieceView Player1;
     [SerializeField]
     private GameObject _enemy;
+    private Board _board;
+    private Deck _deck;
+    private BoardView _boardView;
+    private PieceView Player1;
+    private PieceView[] _pieces;
+
 
     void Start()
     {
@@ -37,13 +39,52 @@ public class GameLoop : MonoBehaviour
             Player1 = pieceView;
             break;
          }
+
+        _pieces = piecesViews;
         
             
 
         var boardView = FindObjectOfType<BoardView>();
         boardView.PositionClicked += OnPositionClicked;
-       
+        _boardView = boardView;
     }
+
+    public List<Position> GetValidPositions(CardType card)
+    {
+        List<Position> positions = new List<Position>();
+
+        if(card == CardType.Move)
+        {
+
+            foreach (var position in _boardView.TilePositions)
+            {
+                bool positionIsFree = true;
+
+                foreach (var piece in _pieces)
+                {
+                    var pos = PositionHelper.WorldToHexPosition(piece.WorldPosition);
+                    if (pos.Q == position.Q && pos.R == position.R && piece.gameObject.activeSelf)
+                    {
+                        positionIsFree = false;
+                        break;
+                    }
+                }
+
+                if (positionIsFree)
+                {
+                    positions.Add(position);
+                }
+            }
+
+
+            return positions;
+        }
+
+
+        return null;
+    }
+
+
 
     private void OnPositionClicked(object sender, PositionEventArgs e)
     {
