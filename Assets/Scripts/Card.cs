@@ -69,7 +69,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
             _positionView = positionView;
             selectedPosition = _positionView.HexPosition;
         }
-        else
+        else if (_positionView != null)
             _positionView.DeActivate();
     }
 
