@@ -22,6 +22,10 @@ public class MoveSetHelper
         _fromPosition = fromPosition;
         _player = piece.Player;
     }
+    public List<Position> CollectValidPositions()
+    {
+        return _validPositions;
+    }
 
     //Right
     public MoveSetHelper RightUp(int maxSteps = int.MaxValue, params Validator[] validators)
@@ -49,7 +53,28 @@ public class MoveSetHelper
 
         var nextPosition = new Position(_fromPosition.Q + xOffset, _fromPosition.R + yOffset);
 
-        //var steps = 0;
+        var steps = 0;
+        while(steps < maxSteps && _board.IsValidPosition(nextPosition))
+        {
+            //if(_board.TryGetPiece(nextPosition,out var nextpiece))
+            //{
+            //    if (nextpiece.Player != _player)
+            //        _validPositions.Add(nextPosition);
+            //    break;
+            //}
+            //else
+            //{
+            //    _validPositions.Add(nextPosition);
+            //    nextPosition = new Position(nextPosition.Q + xOffset, nextPosition.R + yOffset);
+            //    steps++;
+            //}
+            _validPositions.Add(nextPosition);
+            nextPosition = new Position(nextPosition.Q + xOffset, nextPosition.R + yOffset);
+            steps++;
+        }
+
+        return this;
+
         //while (steps < maxSteps && _board.IsValidPosition(nextPosition) && validators.All((v) => v(_board, _fromPosition, nextPosition)))
         //{
         //    if (_board.TryGetPiece(nextPosition, out var nextPiece))
@@ -68,6 +93,6 @@ public class MoveSetHelper
         //    }
         //}
 
-        return this;
+        //return this;
     }
 }

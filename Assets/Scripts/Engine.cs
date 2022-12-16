@@ -6,9 +6,12 @@ public class Engine : MonoBehaviour
 {
     private readonly Board _board;
 
-    public Engine(Board board)
+    private readonly PieceView _player;
+
+    public Engine(Board board , PieceView player)
     {
         _board = board;
+        _player = player;
     }
 
 

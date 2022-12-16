@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +9,12 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     private GameLoop _gameLoop;
     [SerializeField]
     private List<Position> _validPositions = new List<Position>();
+    private List<List<Position>> _validPostionGroups = new List<List<Position>>();
     [SerializeField]
     private CardType _type;
     public CardType Type => _type;
 
+    private BoardView _boardView;
 
     private GameObject _copy;
 
@@ -24,18 +27,44 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     private void Start()
     {
         _gameLoop = FindObjectOfType<GameLoop>();
+        _boardView = FindObjectOfType<BoardView>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         _copy = Instantiate(transform.gameObject, transform.parent);
-        _validPositions = _gameLoop.GetValidPositions(Type);
+
+        _validPositions = new List<Position>();
+        _validPostionGroups = new List<List<Position>>();
+
+
+        if (CardType.Move == Type)
+            _validPositions = _gameLoop.GetValidPositions(Type);
+
+        else if(CardType.Shoot == Type || CardType.Slash == Type || CardType.ShockWave == Type )
+        {
+            _validPostionGroups = _gameLoop.GetValidPositionsOptions(Type);
+
+            foreach (List<Position> positions in _validPostionGroups)
+            {
+
+                foreach (Position position in positions)
+                {
+                    _validPositions.Add(position);
+                }
+            }
+
+
+            
+        }
+            
         IsHolding = true;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         _copy.transform.position = eventData.position;
+
 
 
         RaycastHit hit;
@@ -48,11 +77,48 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
 
             if(CardType.Move == Type)
-            MoveCardHighlightFunction(positionView);
+                MoveCardHighlightFunction(positionView);
+
+            else if (CardType.Shoot == Type || CardType.Slash == Type || CardType.ShockWave == Type)
+                CardHighlightGroup(positionView);
 
         }
         else if (_positionView != null)
+        {
             _positionView.DeActivate();
+        }
+        else
+            _boardView.SetActivePosition = new List<Position>();
+
+    }
+
+    private void CardHighlightGroup(PositionView positionView)
+    {
+        if (!_validPositions.Contains(positionView.HexPosition))
+            _boardView.SetActivePosition = _validPositions;
+        else
+            foreach (List<Position> positions in _validPostionGroups)
+            {
+
+                if (positions.Contains(positionView.HexPosition) && CardType.Shoot == Type)
+                {
+                    _boardView.SetActivePosition = positions;
+                    break;
+                }
+                else if (positions[1].Q == positionView.HexPosition.Q && positions[1].R == positionView.HexPosition.R && CardType.Slash == Type )
+                {
+                    _boardView.SetActivePosition = positions;
+                    break;
+                }
+                else if (positions[1].Q == positionView.HexPosition.Q && positions[1].R == positionView.HexPosition.R && CardType.ShockWave == Type)
+                {
+                    _boardView.SetActivePosition = positions;
+                    break;
+                }
+
+
+            }
+
     }
 
     private void MoveCardHighlightFunction(PositionView positionView)
@@ -98,6 +164,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
         IsHolding = false;
 
+        _boardView.SetActivePosition = new List<Position>();
     }
 
 

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
         Move,
         ShockWave,
         Slash,
-        Lazer
+        Shoot
 
     }
     public interface ICard

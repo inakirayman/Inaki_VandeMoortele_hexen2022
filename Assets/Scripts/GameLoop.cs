@@ -79,13 +79,25 @@ public class GameLoop : MonoBehaviour
 
             return positions;
         }
+       
 
 
         return null;
     }
 
+    public List<List<Position>> GetValidPositionsOptions(CardType card)
+    {
+        if (card == CardType.Shoot)
+        {
+            return MoveSetCollection.GetValidTilesForShoot(Player1, _board);
+        }
+        else if(card == CardType.Slash || card == CardType.ShockWave)
+        {
+            return MoveSetCollection.GetValidTilesForCone(Player1, _board);
+        }
 
-
+        return null;
+    }
     private void OnPositionClicked(object sender, PositionEventArgs e)
     {
         var cards = _deck.GetComponentsInChildren<Card>();
@@ -102,9 +114,9 @@ public class GameLoop : MonoBehaviour
                 }
                 else if (card.Type == CardType.Slash)
                 {
-
+                    
                 }
-                else if (card.Type == CardType.Lazer)
+                else if (card.Type == CardType.Shoot)
                 {
 
                 }
@@ -119,7 +131,22 @@ public class GameLoop : MonoBehaviour
         _deck.DeckUpdate();
 
 
-        Debug.Log(e.Position);
+        //List<List<Position>> list = MoveSetCollection.GetValidTilesForShoot(Player1, _board);
+
+
+
+        //foreach (List<Position> pos in list)
+        //{
+
+        //    Debug.Log($"loop: {list.IndexOf(pos)}");
+
+        //   foreach (Position position in pos)
+        //   {
+        //        Debug.Log(position);
+        //   }
+        //}
+
+        //Debug.Log(e.Position);
     }
 
 
