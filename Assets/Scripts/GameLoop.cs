@@ -11,11 +11,13 @@ public class GameLoop : MonoBehaviour
     private Deck _deck;
     private BoardView _boardView;
     private PieceView Player1;
+    private Engine _engine;
     private PieceView[] _pieces;
 
 
     void Start()
     {
+        
         SpawnHelper.SpawnEnemies(_enemy, 8);
 
         _deck = FindObjectOfType<Deck>();
@@ -33,20 +35,28 @@ public class GameLoop : MonoBehaviour
         var piecesViews = FindObjectsOfType<PieceView>();
         foreach (var pieceView in piecesViews)
             _board.Place(PositionHelper.WorldToHexPosition(pieceView.WorldPosition), pieceView);
+        PieceView player =null;
         foreach (var pieceView in piecesViews)
          if (pieceView.Player == Player.Player1)
          {
-            Player1 = pieceView;
+            player = pieceView;
             break;
          }
+       
 
         _pieces = piecesViews;
-        
-            
 
+
+        
         var boardView = FindObjectOfType<BoardView>();
         boardView.PositionClicked += OnPositionClicked;
         _boardView = boardView;
+
+        _engine = new Engine(_board, _boardView, player, _deck, _pieces);
+
+        _deck.SetupCards(_engine);
+
+
     }
 
     public List<Position> GetValidPositions(CardType card)
@@ -85,7 +95,7 @@ public class GameLoop : MonoBehaviour
         return null;
     }
 
-    public List<List<Position>> GetValidPositionsOptions(CardType card)
+    public List<List<Position>> GetValidPositionsGroups(CardType card)
     {
         if (card == CardType.Shoot)
         {
@@ -98,55 +108,43 @@ public class GameLoop : MonoBehaviour
 
         return null;
     }
+
+
     private void OnPositionClicked(object sender, PositionEventArgs e)
     {
-        var cards = _deck.GetComponentsInChildren<Card>();
-        foreach (Card card in cards)
-        {
-
-            if (card.IsPlayed)
-            {
-
-                if (card.Type == CardType.Move)
-                {
-                    card.IsPlayed = _board.Move(PositionHelper.WorldToHexPosition(Player1.WorldPosition), e.Position);
-
-                }
-                else if (card.Type == CardType.Slash)
-                {
-                    
-                }
-                else if (card.Type == CardType.Shoot)
-                {
-
-                }
-                else if (card.Type == CardType.ShockWave)
-                {
-
-                }
-
-            }
-
-        }
-        _deck.DeckUpdate();
-
-
-        //List<List<Position>> list = MoveSetCollection.GetValidTilesForShoot(Player1, _board);
-
-
-
-        //foreach (List<Position> pos in list)
+        //var cards = _deck.GetComponentsInChildren<Card>();
+        //foreach (Card card in cards)
         //{
 
-        //    Debug.Log($"loop: {list.IndexOf(pos)}");
+        //    if (card.IsPlayed)
+        //    {
 
-        //   foreach (Position position in pos)
-        //   {
-        //        Debug.Log(position);
-        //   }
+        //        if (card.Type == CardType.Move)
+        //        {
+        //            card.IsPlayed = _board.Move(PositionHelper.WorldToHexPosition(Player1.WorldPosition), e.Position);
+
+        //        }
+        //        else if (card.Type == CardType.Slash)
+        //        {
+
+        //        }
+        //        else if (card.Type == CardType.Shoot)
+        //        {
+
+        //        }
+        //        else if (card.Type == CardType.ShockWave)
+        //        {
+
+        //        }
+
+        //    }
+
         //}
+        //_deck.DeckUpdate();
+        _engine.CardLogic(e.Position);
 
-        //Debug.Log(e.Position);
+
+        Debug.Log(e.Position);
     }
 
 

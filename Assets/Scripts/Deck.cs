@@ -16,21 +16,23 @@ public class Deck : MonoBehaviour
     [SerializeField]
     private GameObject[] _cardPrefabs;
 
+    
+   
+    
 
-    // Start is called before the first frame update
-    void Start()
+    public void SetupCards(Engine engine)
     {
-        for(int i = 0; i < _deckSize ; i++)
+        for (int i = 0; i < _deckSize; i++)
         {
             GameObject card = Instantiate(_cardPrefabs[Random.Range(0, _cardPrefabs.Length)], transform);
             card.transform.gameObject.SetActive(false);
+            card.GetComponent<Card>().GameEngine = engine;
             _cards[i] = card;
         }
+
         Debug.Log("Deck Generated");
         DeckUpdate();
     }
-
-
 
   
         

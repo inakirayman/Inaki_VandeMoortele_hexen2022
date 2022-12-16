@@ -39,8 +39,8 @@ public class MoveSetCollection
     {
         List<List<Position>> positionsList = new List<List<Position>>();
 
-        positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).LeftUp(1).CollectValidPositions()); //Left
         positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).RightUp(1).CollectValidPositions()); //Center
+        positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).LeftUp(1).CollectValidPositions()); //Left
         positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).Right(1).CollectValidPositions()); //Right
 
 
@@ -57,13 +57,12 @@ public class MoveSetCollection
 
         return validPositions;
     }
-
     private static List<Position> GetTileConeRight(PieceView player, Board board)
     {
         List<List<Position>> positionsList = new List<List<Position>>();
 
-        positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).RightUp(1).CollectValidPositions()); //Left
         positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).Right(1).CollectValidPositions()); //Center
+        positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).RightUp(1).CollectValidPositions()); //Left
         positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).RightDown(1).CollectValidPositions()); //Right
 
 
@@ -84,8 +83,8 @@ public class MoveSetCollection
     {
         List<List<Position>> positionsList = new List<List<Position>>();
 
-        positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).Right(1).CollectValidPositions()); //Left
         positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).RightDown(1).CollectValidPositions()); //Center
+        positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).Right(1).CollectValidPositions()); //Left
         positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).LeftDown(1).CollectValidPositions()); //Right
 
 
@@ -106,8 +105,8 @@ public class MoveSetCollection
     {
         List<List<Position>> positionsList = new List<List<Position>>();
 
-        positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).RightUp(1).CollectValidPositions()); //Left
         positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).LeftUp(1).CollectValidPositions()); //Center
+        positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).RightUp(1).CollectValidPositions()); //Left
         positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).Left(1).CollectValidPositions()); //Right
 
 
@@ -124,13 +123,12 @@ public class MoveSetCollection
 
         return validPositions;
     }
-
     private static List<Position> GetTileConeLeft(PieceView player, Board board)
     {
         List<List<Position>> positionsList = new List<List<Position>>();
 
-        positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).LeftUp(1).CollectValidPositions()); //Left
         positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).Left(1).CollectValidPositions()); //Center
+        positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).LeftUp(1).CollectValidPositions()); //Left
         positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).LeftDown(1).CollectValidPositions()); //Right
 
 
@@ -151,8 +149,8 @@ public class MoveSetCollection
     {
         List<List<Position>> positionsList = new List<List<Position>>();
 
-        positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).Left(1).CollectValidPositions()); //Left
         positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).LeftDown(1).CollectValidPositions()); //Center
+        positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).Left(1).CollectValidPositions()); //Left
         positionsList.Add(new MoveSetHelper(board, PositionHelper.WorldToHexPosition(player.WorldPosition)).RightDown(1).CollectValidPositions()); //Right
 
 
@@ -169,6 +167,7 @@ public class MoveSetCollection
 
         return validPositions;
     }
+
 
 
 

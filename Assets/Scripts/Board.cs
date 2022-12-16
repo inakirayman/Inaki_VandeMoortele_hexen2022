@@ -66,7 +66,7 @@ public class Board
         => _pieces.TryGetValue(position, out piece);
 
     public bool IsValidPosition(Position position)
-        => (0 <= Mathf.Abs(position.Q) && Mathf.Abs(position.Q) <= _distance && 0 <= Mathf.Abs(position.R) && Mathf.Abs(position.R) <= _distance);
+        => (_distance >= HexHelper.AxialDistance(new Position(0,0), position));
 
     public bool Place(Position position, PieceView piece)
     {

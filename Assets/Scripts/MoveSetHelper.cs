@@ -56,43 +56,12 @@ public class MoveSetHelper
         var steps = 0;
         while(steps < maxSteps && _board.IsValidPosition(nextPosition))
         {
-            //if(_board.TryGetPiece(nextPosition,out var nextpiece))
-            //{
-            //    if (nextpiece.Player != _player)
-            //        _validPositions.Add(nextPosition);
-            //    break;
-            //}
-            //else
-            //{
-            //    _validPositions.Add(nextPosition);
-            //    nextPosition = new Position(nextPosition.Q + xOffset, nextPosition.R + yOffset);
-            //    steps++;
-            //}
+           
             _validPositions.Add(nextPosition);
             nextPosition = new Position(nextPosition.Q + xOffset, nextPosition.R + yOffset);
             steps++;
         }
 
         return this;
-
-        //while (steps < maxSteps && _board.IsValidPosition(nextPosition) && validators.All((v) => v(_board, _fromPosition, nextPosition)))
-        //{
-        //    if (_board.TryGetPiece(nextPosition, out var nextPiece))
-        //    {
-        //        if (nextPiece.Player != _player)
-        //            _validPositions.Add(nextPosition);
-
-        //        break;
-        //    }
-        //    else
-        //    {
-        //        _validPositions.Add(nextPosition);
-
-        //        nextPosition = new Position(nextPosition.Q + xOffset, nextPosition.R + yOffset);
-        //        steps++;
-        //    }
-        //}
-
-        //return this;
     }
 }
