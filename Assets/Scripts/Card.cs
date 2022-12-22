@@ -54,10 +54,13 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         {
             PositionView positionView = hit.transform.gameObject.GetComponent<PositionView>();
 
-            GameEngine.SetHighlights(positionView.HexPosition, Type, _validPositions , _validPostionGroups);
+            GameEngine.SetHighlights(positionView.HexPosition, Type, _validPositions, _validPostionGroups);
 
         }
-        
+        else
+            GameEngine.SetActiveTiles(new List<Position>());
+
+
     }
 
 

@@ -59,88 +59,60 @@ public class GameLoop : MonoBehaviour
 
     }
 
-    public List<Position> GetValidPositions(CardType card)
-    {
-        List<Position> positions = new List<Position>();
+    //public List<Position> GetValidPositions(CardType card)
+    //{
+    //    List<Position> positions = new List<Position>();
 
-        if(card == CardType.Move)
-        {
+    //    if(card == CardType.Move)
+    //    {
 
-            foreach (var position in _boardView.TilePositions)
-            {
-                bool positionIsFree = true;
+    //        foreach (var position in _boardView.TilePositions)
+    //        {
+    //            bool positionIsFree = true;
 
-                foreach (var piece in _pieces)
-                {
-                    var pos = PositionHelper.WorldToHexPosition(piece.WorldPosition);
-                    if (pos.Q == position.Q && pos.R == position.R && piece.gameObject.activeSelf)
-                    {
-                        positionIsFree = false;
-                        break;
-                    }
-                }
+    //            foreach (var piece in _pieces)
+    //            {
+    //                var pos = PositionHelper.WorldToHexPosition(piece.WorldPosition);
+    //                if (pos.Q == position.Q && pos.R == position.R && piece.gameObject.activeSelf)
+    //                {
+    //                    positionIsFree = false;
+    //                    break;
+    //                }
+    //            }
 
-                if (positionIsFree)
-                {
-                    positions.Add(position);
-                }
-            }
+    //            if (positionIsFree)
+    //            {
+    //                positions.Add(position);
+    //            }
+    //        }
 
 
-            return positions;
-        }
+    //        return positions;
+    //    }
        
 
 
-        return null;
-    }
+    //    return null;
+    //}
 
-    public List<List<Position>> GetValidPositionsGroups(CardType card)
-    {
-        if (card == CardType.Shoot)
-        {
-            return MoveSetCollection.GetValidTilesForShoot(Player1, _board);
-        }
-        else if(card == CardType.Slash || card == CardType.ShockWave)
-        {
-            return MoveSetCollection.GetValidTilesForCone(Player1, _board);
-        }
+    //public List<List<Position>> GetValidPositionsGroups(CardType card)
+    //{
+    //    if (card == CardType.Shoot)
+    //    {
+    //        return MoveSetCollection.GetValidTilesForShoot(Player1, _board);
+    //    }
+    //    else if(card == CardType.Slash || card == CardType.ShockWave)
+    //    {
+    //        return MoveSetCollection.GetValidTilesForCone(Player1, _board);
+    //    }
 
-        return null;
-    }
+    //    return null;
+    //}
 
 
     private void OnPositionClicked(object sender, PositionEventArgs e)
     {
-        //var cards = _deck.GetComponentsInChildren<Card>();
-        //foreach (Card card in cards)
-        //{
-
-        //    if (card.IsPlayed)
-        //    {
-
-        //        if (card.Type == CardType.Move)
-        //        {
-        //            card.IsPlayed = _board.Move(PositionHelper.WorldToHexPosition(Player1.WorldPosition), e.Position);
-
-        //        }
-        //        else if (card.Type == CardType.Slash)
-        //        {
-
-        //        }
-        //        else if (card.Type == CardType.Shoot)
-        //        {
-
-        //        }
-        //        else if (card.Type == CardType.ShockWave)
-        //        {
-
-        //        }
-
-        //    }
-
-        //}
-        //_deck.DeckUpdate();
+       
         _engine.CardLogic(e.Position);
 
 

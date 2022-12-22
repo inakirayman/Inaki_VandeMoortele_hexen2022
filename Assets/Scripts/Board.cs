@@ -126,6 +126,8 @@ public class Board
         return true;
     }
 
+ 
+
     protected virtual void OnPieceMoved(PieceMovedEventArgs eventArgs)
     {
         var handler = PieceMoved;

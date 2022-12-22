@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class Engine 
 {
+
+
+    private List<Position> _selectedPositions = new List<Position>();
+    public List<Position> SelectedPositions => _selectedPositions;
+
     private  Board _board;
     private  PieceView _player;
     private  Deck _deck;
     private  PieceView[] _pieces;
     private  BoardView _boardView;
+    
 
     public Engine(Board board ,BoardView boardView, PieceView player, Deck deck,PieceView[] pieces)
     {
@@ -20,10 +26,7 @@ public class Engine
     }
 
 
-    private void Start()
-    {
-      
-    }
+   
 
     public void CardLogic(Position position)
     {
@@ -39,16 +42,35 @@ public class Engine
                     card.IsPlayed = _board.Move(PositionHelper.WorldToHexPosition(_player.WorldPosition), position);
 
                 }
+                else if (!_selectedPositions.Contains(position))
+                {
+                    return;
+                }
                 else if (card.Type == CardType.Slash)
                 {
-                    
+
+                    foreach(Position pos in _selectedPositions)
+                    {
+                        _board.Take(pos);
+                    }
                 }
                 else if (card.Type == CardType.Shoot)
                 {
-
+                    foreach (Position pos in _selectedPositions)
+                    {
+                        _board.Take(pos);
+                    }
                 }
                 else if (card.Type == CardType.ShockWave)
                 {
+
+                    foreach(Position pos in _selectedPositions)
+                    {
+                        Position offset = HexHelper.AxialSubtract(pos, PositionHelper.WorldToHexPosition(_player.WorldPosition));
+                        _board.Move(pos, HexHelper.AxialAdd(pos, offset));
+
+                    }
+
 
                 }
 
@@ -63,7 +85,7 @@ public class Engine
 
     public void SetHighlights(Position position, CardType type, List<Position> validPositions, List<List<Position>> validPositionGroups = null )
     {
-        
+
         if (CardType.Move == type)
         {
             List<Position> positions = new List<Position>();
@@ -87,22 +109,27 @@ public class Engine
                     if (positions.Contains(position) && CardType.Shoot == type)
                     {
                         SetActiveTiles(positions);
+                        _selectedPositions = positions;
                         break;
                     }
                     else if (positions[0] == position && CardType.Slash == type)
                     {
                         SetActiveTiles(positions);
+                        _selectedPositions = positions;
                         break;
                     }
                     else if (positions[0] == position && CardType.ShockWave == type)
                     {
                         SetActiveTiles(positions);
+                        _selectedPositions = positions;
                         break;
                     }
 
 
                 }
         }
+        else
+            _selectedPositions = new List<Position>();
             
 
     }
@@ -131,7 +158,6 @@ public class Engine
                         break;
                     }
                 }
-
                 if (positionIsFree)
                 {
                     positions.Add(position);

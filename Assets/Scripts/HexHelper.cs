@@ -49,10 +49,14 @@ public class HexHelper
         return new Vector3(q, r, s);
     }
 
+    public static Position AxialSubtract(Position a, Position b) => new Position(a.Q - b.Q, a.R - b.R);
+    public static Position AxialAdd(Position a, Position b) => new Position(a.Q + b.Q, a.R + b.R);
+
     public static int AxialDistance(Position a, Position b)
     {
         return (Mathf.Abs(a.Q - b.Q) + Mathf.Abs(a.Q + a.R - b.Q - b.R) + Mathf.Abs(a.R - b.R)) / 2;
     }
+
    
 
 }
