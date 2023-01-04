@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Engine 
+public class Engine
 {
 
 
     private List<Position> _selectedPositions = new List<Position>();
     public List<Position> SelectedPositions => _selectedPositions;
 
-    private  Board _board;
-    private  PieceView _player;
-    private  Deck _deck;
-    private  PieceView[] _pieces;
-    private  BoardView _boardView;
-    
+    private Board _board;
+    private PieceView _player;
+    private Deck _deck;
+    private PieceView[] _pieces;
+    private BoardView _boardView;
 
-    public Engine(Board board ,BoardView boardView, PieceView player, Deck deck,PieceView[] pieces)
+
+    public Engine(Board board, BoardView boardView, PieceView player, Deck deck, PieceView[] pieces)
     {
         _board = board;
         _player = player;
@@ -47,7 +47,7 @@ public class Engine
                 else if (card.Type == CardType.Slash)
                 {
 
-                    foreach(Position pos in _selectedPositions)
+                    foreach (Position pos in _selectedPositions)
                     {
                         _board.Take(pos);
                     }
@@ -62,7 +62,7 @@ public class Engine
                 else if (card.Type == CardType.ShockWave)
                 {
 
-                    foreach(Position pos in _selectedPositions)
+                    foreach (Position pos in _selectedPositions)
                     {
                         Position offset = HexHelper.AxialSubtract(pos, PositionHelper.WorldToHexPosition(_player.WorldPosition));
                         Position moveTo = HexHelper.AxialAdd(pos, offset);
@@ -72,8 +72,8 @@ public class Engine
                             _board.Move(pos, moveTo);
                         }
                         else
-                        _board.Take(pos);
-                        
+                            _board.Take(pos);
+
 
                     }
 
@@ -87,55 +87,48 @@ public class Engine
         _deck.DeckUpdate();
     }
 
-    public void SetHighlights(Position position, CardType type, List<Position> validPositions, List<List<Position>> validPositionGroups = null )
+    public void SetHighlights(Position position, CardType type, List<Position> validPositions, List<List<Position>> validPositionGroups = null)
     {
+        
 
-        if (CardType.Move == type)
+        switch (type)
         {
-            List<Position> positions = new List<Position>();
-
-            if (validPositions.Contains(position))
-            {
-                positions.Add(position);
-
-                SetActiveTiles(positions);
-            }
-        }
-        else if (CardType.Shoot == type || CardType.Slash == type || CardType.ShockWave == type)
-        {
-
-            if (!validPositions.Contains(position))
-                SetActiveTiles(validPositions);
-            else
-                foreach (List<Position> positions in validPositionGroups)
+            case CardType.Move:
+                if (validPositions.Contains(position))
                 {
+                    List<Position> positions = new List<Position>();
 
-                    if (positions.Count == 0) ;
-
-                    else if (CardType.Shoot == type && positions.Contains(position))
-                    {
-                        SetActiveTiles(positions);
-                        _selectedPositions = positions;
-                        break;
-                    }
-                    else if (CardType.Slash == type && positions[0] == position)
-                    {
-                        SetActiveTiles(positions);
-                        _selectedPositions = positions;
-                        break;
-                    }
-                    else if (CardType.ShockWave == type && positions[0] == position)
-                    {
-                        SetActiveTiles(positions);
-                        _selectedPositions = positions;
-                        break;
-                    }
-
-
+                    positions.Add(position);
+                    SetActiveTiles(positions);
                 }
+                break;
+
+            case CardType.Shoot:
+            case CardType.Slash:
+            case CardType.ShockWave:
+                if (!validPositions.Contains(position))
+                {
+                    SetActiveTiles(validPositions);
+                }
+                else
+                {
+                    foreach (List<Position> positions in validPositionGroups)
+                    {
+                        if (positions.Count == 0) continue;
+
+                        if ((type == CardType.Shoot && positions.Contains(position)) || (type == CardType.Slash && positions[0] == position) || (type == CardType.ShockWave && positions[0] == position))
+                        {
+                            SetActiveTiles(positions);
+                            _selectedPositions = positions;
+                            break;
+                        }
+                    }
+                }
+                break;
+            default:
+                _selectedPositions = new List<Position>();
+                break;
         }
-        else
-            _selectedPositions = new List<Position>();
     }
     public void SetActiveTiles(List<Position> positions)
     {
@@ -185,7 +178,7 @@ public class Engine
         }
         else if (card == CardType.Slash || card == CardType.ShockWave)
         {
-            return MoveSetCollection.GetValidTilesForCone(_player, _board);
+            return MoveSetCollection.GetValidTilesForCones(_player, _board);
         }
 
         return null;

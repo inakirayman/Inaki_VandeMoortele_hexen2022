@@ -67,7 +67,7 @@ public class GameLoop : MonoBehaviour
         _engine.CardLogic(e.Position);
 
 
-        Debug.Log(e.Position);
+        //Debug.Log(e.Position);
     }
 
 
