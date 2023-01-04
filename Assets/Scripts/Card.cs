@@ -13,13 +13,11 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     [SerializeField]
     private CardType _type;
     public CardType Type => _type;
+
+
     private GameObject _copy;
 
     public bool IsPlayed = false;
-    public bool IsHolding = false;
-
-    public Position selectedPosition;
-    private PositionView _positionView;
 
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -37,7 +35,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
             ValidGroupsToValidPositions();
         }
 
-        IsHolding = true;
+        
     }
 
     
@@ -74,7 +72,6 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         {
 
             PositionView positionView = hit.transform.gameObject.GetComponent<PositionView>();
-            selectedPosition = positionView.HexPosition;
             Destroy(_copy);
             IsPlayed = true;
             positionView.OnPointerClick(eventData);
@@ -85,7 +82,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         else
             Destroy(_copy);
 
-        IsHolding = false;
+        
 
         GameEngine.SetActiveTiles(new List<Position>());
     }

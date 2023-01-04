@@ -16,10 +16,6 @@ public class Deck : MonoBehaviour
     [SerializeField]
     private GameObject[] _cardPrefabs;
 
-    
-   
-    
-
     public void SetupCards(Engine engine)
     {
         for (int i = 0; i < _deckSize; i++)
@@ -33,12 +29,6 @@ public class Deck : MonoBehaviour
         Debug.Log("Deck Generated");
         DeckUpdate();
     }
-
-  
-        
-   
-
-
 
     // Update is called once per frame
     public void DeckUpdate()

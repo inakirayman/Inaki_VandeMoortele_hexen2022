@@ -33,9 +33,11 @@ public class GameLoop : MonoBehaviour
            => e.Piece.Placed(PositionHelper.HexToWorldPosition(e.ToPosition));
 
         var piecesViews = FindObjectsOfType<PieceView>();
+
         foreach (var pieceView in piecesViews)
             _board.Place(PositionHelper.WorldToHexPosition(pieceView.WorldPosition), pieceView);
-        PieceView player =null;
+
+        PieceView player = null;
         foreach (var pieceView in piecesViews)
          if (pieceView.Player == Player.Player1)
          {
@@ -58,57 +60,6 @@ public class GameLoop : MonoBehaviour
 
 
     }
-
-    //public List<Position> GetValidPositions(CardType card)
-    //{
-    //    List<Position> positions = new List<Position>();
-
-    //    if(card == CardType.Move)
-    //    {
-
-    //        foreach (var position in _boardView.TilePositions)
-    //        {
-    //            bool positionIsFree = true;
-
-    //            foreach (var piece in _pieces)
-    //            {
-    //                var pos = PositionHelper.WorldToHexPosition(piece.WorldPosition);
-    //                if (pos.Q == position.Q && pos.R == position.R && piece.gameObject.activeSelf)
-    //                {
-    //                    positionIsFree = false;
-    //                    break;
-    //                }
-    //            }
-
-    //            if (positionIsFree)
-    //            {
-    //                positions.Add(position);
-    //            }
-    //        }
-
-
-    //        return positions;
-    //    }
-       
-
-
-    //    return null;
-    //}
-
-    //public List<List<Position>> GetValidPositionsGroups(CardType card)
-    //{
-    //    if (card == CardType.Shoot)
-    //    {
-    //        return MoveSetCollection.GetValidTilesForShoot(Player1, _board);
-    //    }
-    //    else if(card == CardType.Slash || card == CardType.ShockWave)
-    //    {
-    //        return MoveSetCollection.GetValidTilesForCone(Player1, _board);
-    //    }
-
-    //    return null;
-    //}
-
 
     private void OnPositionClicked(object sender, PositionEventArgs e)
     {
