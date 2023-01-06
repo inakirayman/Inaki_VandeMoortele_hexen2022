@@ -63,7 +63,6 @@ public class GameLoop : MonoBehaviour
 
     private void OnPositionClicked(object sender, PositionEventArgs e)
     {
-       
         _engine.CardLogic(e.Position);
 
 
