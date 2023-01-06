@@ -11,8 +11,9 @@ public class SpawnHelper : MonoBehaviour
     public static Position PlayerSpawn = new Position(0, 0);
     
     public static List<Position> ValidPositions = new List<Position>();
+    public static GameObject Prefab = Resources.Load<GameObject>("Enemy");
 
-    public static void SpawnEnemies(GameObject entity, int amount) 
+    public static void SpawnEnemies( int amount) 
     {
         var positionViews = FindObjectsOfType<PositionView>();
 
@@ -28,7 +29,7 @@ public class SpawnHelper : MonoBehaviour
         {
             int random = Random.Range(0, ValidPositions.Count);
             Position position = ValidPositions[random];
-            Instantiate(entity, PositionHelper.HexToWorldPosition(position), entity.transform.rotation);
+            Instantiate(Prefab, PositionHelper.HexToWorldPosition(position), Prefab.transform.rotation);
             ValidPositions.RemoveAt(random);
         }
 
